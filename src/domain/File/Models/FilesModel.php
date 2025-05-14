@@ -9,7 +9,7 @@ class FilesModel extends Model
     protected $table = 'files';
 
     protected $fillable = [
-        'file_name',
+        'name',
         'extension',
         'sent_at'
     ];

@@ -5,16 +5,16 @@ namespace Src\domain\File\DTO;
 class GetFileContentByFilterInputDto
 {
     public function __construct(
-        public ?string $tckrSymb,
-        public ?string $rptDt
+        public ?string $name,
+        public ?string $age
     )
     { }
 
     public function toArray()
     {
         return [
-            'tckr_symb' => $this->tckrSymb,
-            'rpt_dt' => $this->rptDt
+            'name' => $this->name,
+            'age' => $this->age
         ];
     }
 }

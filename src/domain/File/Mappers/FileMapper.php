@@ -15,12 +15,10 @@ class FileMapper
         foreach($fileDto->content as $content){
             $fileContent[] = new FileContent(
                 $content->id,
-                $content->rptDt,
-                $content->tckrSymb,
-                $content->mktNm,
-                $content->sctyCtgyNm,
-                $content->isin,
-                $content->crpnNm
+                $content->name,
+                $content->age,
+                $content->email,
+                $content->code
             );
         }
 
@@ -39,12 +37,10 @@ class FileMapper
         foreach($file->getContent() as $content){
             $fileContent[] = new FileContentDto(
                 $content->getId(),
-                $content->getRptDt(),
-                $content->getTckrSymb(),
-                $content->getMktNm(),
-                $content->getSctyCtgyNm(),
-                $content->getIsin(),
-                $content->getCrpnNm()
+                $content->getName(),
+                $content->getAge(),
+                $content->getEmail(),
+                $content->getCode()
             );
         }
 

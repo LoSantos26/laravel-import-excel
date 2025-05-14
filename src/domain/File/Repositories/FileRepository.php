@@ -106,12 +106,10 @@ class FileRepository implements FileRepositoryInterface
         foreach($fileData->content as $content){
             $contentData[] = new FileContent(
                 $content->id,
-                $content->rpt_dt,
-                $content->tckr_symb,
-                $content->mkt_nm,
-                $content->scty_ctgy_nm,
-                $content->isin,
-                $content->crpn_nm
+                $content->name,
+                $content->age,
+                $content->email,
+                $content->code
             );
         }
 
@@ -128,12 +126,10 @@ class FileRepository implements FileRepositoryInterface
     {
         return new FileContent(
             $contentData->id,
-            $contentData->rpt_dt,
-            $contentData->tckr_symb,
-            $contentData->mkt_nm,
-            $contentData->scty_ctgy_nm,
-            $contentData->isin,
-            $contentData->crpn_nm
+            $contentData->name,
+            $contentData->age,
+            $contentData->email,
+            $contentData->code
         );
 
     }

@@ -6,20 +6,16 @@ class FileContentDto
 {
     /**
      * @param int|null $id
-     * @param string $rptDt
-     * @param string|null $tckrSymb
-     * @param string|null $mktNm
-     * @param string|null $sctyCtgyNm
-     * @param string|null $isin
-     * @param string|null $crpnNm
+     * @param string $name
+     * @param string $age
+     * @param string $email
+     * @param string $code
      */
     public function __construct(
         public ?int $id,
-        public string $rptDt,
-        public ?string $tckrSymb,
-        public ?string $mktNm,
-        public ?string $sctyCtgyNm,
-        public ?string $isin,
-        public ?string $crpnNm
+        public string $name,
+        public string $age,
+        public string $email,
+        public string $code
     ) { }
 }

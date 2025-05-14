@@ -4,25 +4,13 @@ namespace Src\domain\File\Entities;
 
 class FileContent
 {
-    /**
-     * @param int|null $id
-     * @param string $rptDt
-     * @param string|null $tckrSymb
-     * @param string|null $mktNm
-     * @param string|null $sctyCtgyNm
-     * @param string|null $isin
-     * @param string|null $crpnNm
-     */
     public function __construct(
         private ?int $id,
-        private string $rptDt,
-        private ?string $tckrSymb,
-        private ?string $mktNm,
-        private ?string $sctyCtgyNm,
-        private ?string $isin,
-        private ?string $crpnNm
-    )
-    {}
+        private string $name,
+        private string $age,
+        private string $email,
+        private string $code
+    ) { }
 
     /**
      * @return int|null
@@ -35,48 +23,32 @@ class FileContent
     /**
      * @return string
      */
-    public function getRptDt(): string
+    public function getName(): string
     {
-        return $this->rptDt;
+        return $this->name;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getTckrSymb(): ?string
+    public function getEmail(): string
     {
-        return $this->tckrSymb;
+        return $this->email;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getMktNm(): ?string
+    public function getAge(): string
     {
-        return $this->mktNm;
+        return $this->age;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getSctyCtgyNm(): ?string
+    public function getCode(): string
     {
-        return $this->sctyCtgyNm;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getIsin(): ?string
-    {
-        return $this->isin;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCrpnNm(): ?string
-    {
-        return $this->crpnNm;
+        return $this->code;
     }
 }

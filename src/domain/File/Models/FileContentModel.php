@@ -9,12 +9,10 @@ class FileContentModel extends Model
 
     protected $fillable = [
         'file_id',
-        'rpt_dt',
-        'tckr_symb',
-        'mkt_nm',
-        'scty_ctgy_nm',
-        'isin',
-        'crpn_nm'
+        'name',
+        'age',
+        'email',
+        'code'
     ];
 
     public function file()
