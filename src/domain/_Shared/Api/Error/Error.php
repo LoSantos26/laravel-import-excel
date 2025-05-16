@@ -4,7 +4,7 @@ namespace Src\domain\_Shared\Api\Error;
 
 class Error
 {
-    public function mountErrorApi(int $code, string $message)
+    public function mountErrorApi(string $message)
     {
         return [
             'success' => false,

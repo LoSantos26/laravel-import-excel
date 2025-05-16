@@ -16,7 +16,7 @@ class FileRepository implements FileRepositoryInterface
     {
         $fileModel = FilesModel::query()
             ->updateOrCreate([
-                'file_name' => $file->getFileName()
+                'name' => $file->getFileName()
             ],
             [
                 'extension' => $file->getExtension(),
@@ -27,13 +27,11 @@ class FileRepository implements FileRepositoryInterface
             FileContentModel::query()
                 ->create([
                     'file_id' => $fileModel->id,
-                    'rpt_dt' => $content->getRptDt(),
-                    'tckr_symb' => $content->getTckrSymb(),
-                    'mkt_nm' => $content->getMktNm(),
-                    'scty_ctgy_nm' => $content->getSctyCtgyNm(),
-                    'isin' => $content->getIsin(),
-                    'crpn_nm' => $content->getCrpnNm()
-            ]);
+                    'name' => $content->getName(),
+                    'age' => $content->getAge(),
+                    'email' => $content->getEmail(),
+                    'code' => $content->getCode()
+                ]);
         }
 
         return $this->mapFile($fileModel);
@@ -115,7 +113,7 @@ class FileRepository implements FileRepositoryInterface
 
         return new File(
             $fileData->id,
-            $fileData->file_name,
+            $fileData->name,
             $fileData->extension,
             new \DateTimeImmutable($fileData->sent_at),
             $contentData

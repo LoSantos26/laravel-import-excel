@@ -19,12 +19,10 @@ class CreateFileAction
         foreach($fileDto->content as $contentDto){
             $content[] = new FileContent(
                 $contentDto->id,
-                $contentDto->rptDt,
-                $contentDto->tckrSymb,
-                $contentDto->mktNm,
-                $contentDto->sctyCtgyNm,
-                $contentDto->isin,
-                $contentDto->crpnNm
+                $contentDto->name,
+                $contentDto->age,
+                $contentDto->email,
+                $contentDto->code
             );
         }
 

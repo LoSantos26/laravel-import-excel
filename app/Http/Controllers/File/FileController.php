@@ -82,6 +82,10 @@ class FileController extends Controller
     public function upload(Request $request)
     {
         try{
+            $request->validate([
+                'file' => 'required|file|mimes:csv',
+            ]);
+
             $file = $request->file('file');
             $path = $request->file('file')->store('imports');
             $name = $file->getClientOriginalName();
@@ -90,44 +94,18 @@ class FileController extends Controller
             $fileName = $fileInfo[0];
             $extension = $fileInfo[1];
 
-            $fileExist = FileFacade::getByName($fileName);
-
-            if(!empty($fileExist)) {
-                throw new \Exception('Arquivo com este nome já existe.', 400);
-            }
-
-            FileHelper::validateExtension($extension);
-
-            //Pegando o total de registros na planilha
-            $handle = fopen(storage_path('app/' . $path), 'r');
-            $total = 0;
-
-            while (($row = fgetcsv($handle, 0, ',')) !== false) {
-                $total++;
-            }
-            fclose($handle);
-            $totalRows = $total - 2;
-
-            $jobs = [];
-            $offset = 0;
-            $limit = 2000;
-            $total = $totalRows;
-            while($offset < $total){
-                $jobs[] = new FileImportJob($name, $extension, $path, $limit, $offset);
-                $offset += $limit;
-            }
-            Bus::chain($jobs)->dispatch();
+            Excel::import(new FileImport($fileName, $extension), $path, null, \Maatwebsite\Excel\Excel::CSV);
 
             $response = new Response();
-            $responseApi = $response->mountResponseApi(200,'Importação iniciada com sucesso');
+            $responseApi = $response->mountResponseApi(200,'Importação realizada com sucesso!');
 
             return response()->json($responseApi);
 
         }catch (\Throwable $e){
             $error = new Error();
-            $errorApi = $error->mountErrorApi($e->getCode(), $e->getMessage());
+            $errorApi = $error->mountErrorApi($e->getMessage()."-".$e->getFile().":".$e->getLine());
 
-            return response()->json($errorApi, 500);
+            return response()->json($errorApi, $e->getCode());
         }
     }
 }
