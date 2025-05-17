@@ -73,7 +73,7 @@ class FileRepository implements FileRepositoryInterface
     public function getFileByName(string $name): ?File
     {
         $fileModel = FilesModel::query()
-            ->where('file_name', '=', $name)
+            ->where('name', '=', $name)
             ->first();
 
         if(empty($fileModel)){

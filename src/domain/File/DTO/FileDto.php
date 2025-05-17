@@ -19,7 +19,5 @@ class FileDto
         public string $extension,
         public \DateTimeImmutable $sentAt,
         public array $content
-    ){
-        FileHelper::validateExtension($this->extension);;
-    }
+    ){ }
 }
