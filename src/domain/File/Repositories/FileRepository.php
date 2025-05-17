@@ -37,14 +37,31 @@ class FileRepository implements FileRepositoryInterface
         return $this->mapFile($fileModel);
     }
 
-    public function getAll(): LengthAwarePaginator
+    /**
+     * @param array|null $filter
+     * @return File[]|null
+     */
+    public function getAll(?array $filter): ?array
     {
-        $fileModel = FilesModel::query()->select('files.*');
+        $query = FilesModel::query();
 
-        $files = $fileModel->paginate(10);
-        $files->getCollection()->transform(function ($file) {
-            return $this->mapFile($file);
-        });
+        if(!empty($filter['sent_at'])){
+            $query->where('sent_at', '=', $filter['sent_at']);
+        }
+
+        $query->limit($filter['limit'] ?? 10);
+        $query->offset($filter['offset'] ?? 0);
+
+        $filesModel = $query->get();
+
+        if(count($filesModel) <= 0){
+            return null;
+        }
+
+        $files = [];
+        foreach($filesModel as $file){
+            $files[] = $this->mapFile($file);
+        }
 
         return $files;
     }

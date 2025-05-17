@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Bus;
 use Maatwebsite\Excel\Facades\Excel;
 use Src\domain\_Shared\Api\Error\Error;
 use Src\domain\_Shared\Api\Response\Response;
+use Src\domain\File\DTO\GetAllFilesInputDto;
 use Src\domain\File\DTO\GetFileByFilterInputDto;
 use Src\domain\File\DTO\GetFileContentByFilterInputDto;
 use Src\domain\File\Facades\FileFacade;
@@ -75,6 +76,34 @@ class FileController extends Controller
         }
     }
 
+    public function getAll(Request $request)
+    {
+        try{
+            $offset = $request->input('offset');
+            $limit = $request->input('limit');
+            $sentAt = $request->input('sent_at');
+
+            $input = new GetAllFilesInputDto(
+                $offset,
+                $limit,
+                $sentAt
+            );
+
+            $output = FileFacade::getAll($input);
+
+            $response = new Response();
+            $responseApi = $response->mountGetAllFilesResponseApi($output);
+
+            return response()->json($responseApi);
+
+        }catch (\Throwable $e) {
+            $error = new Error();
+            $errorApi = $error->mountErrorApi($e->getMessage());
+
+            return response()->json($errorApi);
+        }
+    }
+
     public function upload(Request $request)
     {
         try{
@@ -99,9 +128,9 @@ class FileController extends Controller
 
         }catch (\Throwable $e){
             $error = new Error();
-            $errorApi = $error->mountErrorApi($e->getMessage()."-".$e->getFile().":".$e->getLine());
+            $errorApi = $error->mountErrorApi($e->getMessage());
 
-            return response()->json($errorApi, 500);
+            return response()->json($errorApi, $e->getCode());
         }
     }
 }

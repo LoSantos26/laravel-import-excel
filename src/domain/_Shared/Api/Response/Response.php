@@ -23,7 +23,7 @@ class Response
             }
 
             return [
-                'result' => [
+                'data' => [
                     'name' => $fileDto->name,
                     'sent_at' => $fileDto->sentAt->format('d/m/Y'),
                     'extension' => $fileDto->extension,
@@ -33,7 +33,7 @@ class Response
         }
 
         return [
-            'result' => null
+            'data' => null
         ];
     }
 
@@ -55,19 +55,56 @@ class Response
             }
 
             return [
-                'result' => $fileContent
+                'data' => $fileContent
             ];
         }
 
         return [
-            'result' => null
+            'data' => null
+        ];
+    }
+
+    /**
+     * @param FileDto[]|null $data
+     * @return array|null
+     */
+    public function mountGetAllFilesResponseApi(?array $data) : ?array
+    {
+        if(!empty($data)){
+            $files = [];
+            $contents = [];
+            foreach($data as $file) {
+                foreach($file->content as $content){
+                    $contents[] = [
+                        'Nome' => $content->name,
+                        'Idade' => $content->age,
+                        'Email' => $content->email,
+                        'Código' => $content->code,
+                    ];
+                }
+
+                $files[] = [
+                    'Nome' => $file->name,
+                    'Data de Envio' => $file->sentAt->format('d/m/Y'),
+                    'Extensão' => $file->extension,
+                    'Conteúdo' => $contents
+                ];
+            }
+
+            return [
+                'data' => $files
+            ];
+        }
+
+        return [
+            'data' => null
         ];
     }
 
     public function mountGetFilesResponseApi(LengthAwarePaginator $files)
     {
         return [
-            'result' => $files
+            'data' => $files
         ];
     }
 

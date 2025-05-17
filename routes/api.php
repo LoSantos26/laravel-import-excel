@@ -20,6 +20,7 @@ Route::post('/file/upload', [FileController::class, 'upload'])->name('file.uploa
 
 Route::get('/file/buscar', [FileController::class, 'getByFilter'])->name('file.get-by-filter');
 Route::get('/file/buscar-conteudo', [FileController::class, 'getContentByFilter'])->name('file.get-content');
+Route::get('/file/buscar-todos', [FileController::class, 'getAll'])->name('file.get-all');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

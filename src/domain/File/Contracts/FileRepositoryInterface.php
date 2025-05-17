@@ -8,7 +8,11 @@ use Src\domain\File\Entities\FileContent;
 
 interface FileRepositoryInterface
 {
-    public function getAll(): LengthAwarePaginator;
+    /**
+     * @param array|null $filter
+     * @return File[]|null
+     */
+    public function getAll(?array $filter): ?array;
 
     public function getFileByName(string $name): ?File;
 
