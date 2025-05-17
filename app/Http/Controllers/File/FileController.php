@@ -100,7 +100,7 @@ class FileController extends Controller
             $error = new Error();
             $errorApi = $error->mountErrorApi($e->getMessage());
 
-            return response()->json($errorApi);
+            return response()->json($errorApi, $e->getCode());
         }
     }
 
