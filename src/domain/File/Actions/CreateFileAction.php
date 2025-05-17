@@ -15,7 +15,7 @@ class CreateFileAction
 
     public function execute(FileDto $fileDto): FileDto
     {
-        $file = $this->fileRepository->getFileByName($fileDto->fileName);
+        $file = $this->fileRepository->getFileByName($fileDto->name);
 
         if(!empty($file)) {
             throw new \Exception('Arquivo com este nome já existe.');
@@ -34,7 +34,7 @@ class CreateFileAction
 
         $file = new File(
             null,
-            $fileDto->fileName,
+            $fileDto->name,
             $fileDto->extension,
             $fileDto->sentAt,
             $content

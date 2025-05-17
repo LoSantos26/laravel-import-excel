@@ -39,7 +39,7 @@ class FileController extends Controller
 
         }catch (\Throwable $e) {
             $error = new Error();
-        $errorApi = $error->mountErrorApi($e->getCode(), $e->getMessage());
+            $errorApi = $error->mountErrorApi($e->getMessage());
 
             return response()->json($errorApi, 500);
         }

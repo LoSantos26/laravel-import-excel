@@ -24,7 +24,7 @@ class FileMapper
 
         return new File(
             $fileDto->id,
-            $fileDto->fileName,
+            $fileDto->name,
             $fileDto->extension,
             new \DateTimeImmutable($fileDto->sentAt),
             $fileContent

@@ -15,19 +15,16 @@ class Response
 
             foreach($fileDto->content as $item) {
                 $content[] = [
-                    'RptDt' => $item->rptDt,
-                    'TckrSymb' => $item->tckrSymb,
-                    'MktNm' => $item->mktNm,
-                    'SctyCtgyNm' => $item->sctyCtgyNm,
-                    'ISIN' => $item->isin,
-                    'CrpnNm' => $item->crpnNm,
+                    'Nome' => $item->name,
+                    'Idade' => $item->age,
+                    'Email' => $item->email,
+                    'Código' => $item->code,
                 ];
             }
 
             return [
                 'result' => [
-                    'success' => true,
-                    'file_name' => $fileDto->fileName,
+                    'name' => $fileDto->name,
                     'sent_at' => $fileDto->sentAt->format('d/m/Y'),
                     'extension' => $fileDto->extension,
                     'content' => $content
@@ -44,13 +41,10 @@ class Response
     {
         return [
             'result' => [
-                'success' => true,
-                'RptDt' => $fileContentDto->rptDt,
-                'TckrSymb' => $fileContentDto->tckrSymb,
-                'MktNm' => $fileContentDto->mktNm,
-                'SctyCtgyNm' => $fileContentDto->sctyCtgyNm,
-                'ISIN' => $fileContentDto->isin,
-                'CrpnNm' => $fileContentDto->crpnNm,
+                'Nome' => $fileContentDto->name,
+                'Idade' => $fileContentDto->age,
+                'Email' => $fileContentDto->email,
+                'Código' => $fileContentDto->code,
             ]
         ];
     }
@@ -58,15 +52,13 @@ class Response
     public function mountGetFilesResponseApi(LengthAwarePaginator $files)
     {
         return [
-            'success' => true,
             'result' => $files
         ];
     }
 
-    public function mountResponseApi(int $code, string $message)
+    public function mountResponseApi(string $message)
     {
         return [
-            'success' => true,
             'message' => $message,
         ];
     }

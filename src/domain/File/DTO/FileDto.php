@@ -8,16 +8,16 @@ class FileDto
 {
     /**
      * @param int|null $id
-     * @param string $fileName
+     * @param string $name
      * @param string $extension
      * @param \DateTimeImmutable $sentAt
      * @param FileContentDto[] $content
      */
     public function __construct(
-        public ?int $id,
-        public string $fileName,
-        public string $extension,
+        public ?int               $id,
+        public string             $name,
+        public string             $extension,
         public \DateTimeImmutable $sentAt,
-        public array $content
+        public array              $content
     ){ }
 }

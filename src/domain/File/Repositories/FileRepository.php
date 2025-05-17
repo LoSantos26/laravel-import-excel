@@ -53,8 +53,8 @@ class FileRepository implements FileRepositoryInterface
     {
         $query = FilesModel::query();
 
-        if(!empty($filter['file_name'])){
-            $query->where('file_name', '=', $filter['file_name']);
+        if(!empty($filter['name'])){
+            $query->where('name', '=', $filter['name']);
         }
 
         if(!empty($filter['sent_at'])){
