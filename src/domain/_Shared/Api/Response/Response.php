@@ -37,15 +37,30 @@ class Response
         ];
     }
 
-    public function mountFileContentResponseApi(FileContentDto $fileContentDto)
+    /**
+     * @param array|null $fileContentDto
+     * @return array[]|null
+     */
+    public function mountFileContentResponseApi(?array $fileContentDto): ?array
     {
+        if(!empty($fileContentDto)){
+            $fileContent = [];
+            foreach($fileContentDto as $item) {
+                $fileContent[] = [
+                    'Nome' => $item->name,
+                    'Idade' => $item->age,
+                    'Email' => $item->email,
+                    'Código' => $item->code,
+                ];
+            }
+
+            return [
+                'result' => $fileContent
+            ];
+        }
+
         return [
-            'result' => [
-                'Nome' => $fileContentDto->name,
-                'Idade' => $fileContentDto->age,
-                'Email' => $fileContentDto->email,
-                'Código' => $fileContentDto->code,
-            ]
+            'result' => null
         ];
     }
 

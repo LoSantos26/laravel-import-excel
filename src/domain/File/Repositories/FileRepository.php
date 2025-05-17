@@ -83,18 +83,34 @@ class FileRepository implements FileRepositoryInterface
         return $this->mapFile($fileModel);
     }
 
-    public function getContentByFilter(array $filter): FileContent|LengthAwarePaginator|null
+    /**
+     * @param array $filter
+     * @return FileContent[]|null
+     */
+    public function getContentByFilter(array $filter): ?array
     {
-        $fileContentModel = FileContentModel::query()
-            ->where('tckr_symb', '=', $filter['tckr_symb'])
-            ->where('rpt_dt', '=', $filter['rpt_dt'])
-            ->first();
+        $query = FileContentModel::query();
 
-        if(empty($fileContentModel)){
-            return $this->getAll();
+        if(!empty($filter['name'])){
+            $query->where('name', 'LIKE', "%{$filter['name']}%");
         }
 
-        return $this->mapFileContent($fileContentModel->first());
+        if(!empty($filter['email'])){
+            $query->where('email', 'LIKE', "%{$filter['email']}%");
+        }
+
+        $fileContentModel = $query->get();
+
+        if(count($fileContentModel) <= 0){
+            return null;
+        }
+
+        $fileContents = [];
+        foreach($fileContentModel as $content){
+            $fileContents[] = $this->mapFileContent($content);
+        }
+
+        return $fileContents;
     }
 
     private function mapFile(object $fileData): File

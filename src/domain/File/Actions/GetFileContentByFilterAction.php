@@ -16,18 +16,23 @@ class GetFileContentByFilterAction
     public function __construct(private FileRepositoryInterface $fileRepository)
     { }
 
-    public function execute(GetFileContentByFilterInputDto $inputDto): FileContentDto|LengthAwarePaginator
+    /**
+     * @param GetFileContentByFilterInputDto $inputDto
+     * @return FileContentDto[]|null
+     */
+    public function execute(GetFileContentByFilterInputDto $inputDto): ?array
     {
-        $file = $this->fileRepository->getContentByFilter($inputDto->toArray());
+        $contents = $this->fileRepository->getContentByFilter($inputDto->toArray());
 
-        if($file instanceof FileContent) {
-            return FileMapper::entityToDtoContent($file);
+        if(empty($contents)){
+            return null;
         }
 
-        $file->getCollection()->transform(function ($file) {
-            return FileMapper::entityToDto($file);
-        });
+        $fileContents = [];
+        foreach($contents as $content){
+            $fileContents[] = FileMapper::entityToDtoContent($content);
+        }
 
-        return $file;
+        return $fileContents;
     }
 }

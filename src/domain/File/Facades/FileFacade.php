@@ -42,7 +42,11 @@ class FileFacade
         return $action->execute($inputDto);
     }
 
-    public static function getContentByFilter(GetFileContentByFilterInputDto $inputDto): FileContentDto|LengthAwarePaginator
+    /**
+     * @param GetFileContentByFilterInputDto $inputDto
+     * @return FileContentDto[]|null
+     */
+    public static function getContentByFilter(GetFileContentByFilterInputDto $inputDto): ?array
     {
         $action = new GetFileContentByFilterAction(new FileRepository());
         return $action->execute($inputDto);

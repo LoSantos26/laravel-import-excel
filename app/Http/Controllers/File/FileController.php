@@ -48,34 +48,30 @@ class FileController extends Controller
     public function getContentByFilter(Request $request)
     {
         try{
-            $tckrSymb = $request->input('TckrSymb');
-            $rptDt = $request->input('RptDt');
+            $name = $request->input('name');
+            $email = $request->input('email');
 
-            if((!empty($tckrSymb) && empty($rptDt)) || (empty($tckrSymb) && !empty($rptDt))){
-                throw new \Exception('Os parâmetros TckrSym e RptDt precisam ser preenchidos.', 400);
+            if(empty($name) && empty($email)) {
+                throw new \InvalidArgumentException('É ncessário o preenchimento dos campos nome ou email.', 422);
             }
 
             $input = new GetFileContentByFilterInputDto(
-                $tckrSymb,
-                $rptDt
+                $name,
+                $email
             );
 
             $output = FileFacade::getContentByFilter($input);
 
             $response = new Response();
-            if($output instanceof LengthAwarePaginator){
-                $responseApi = $response->mountGetFilesResponseApi($output);
-            }else{
-                $responseApi = $response->mountFileContentResponseApi($output);
-            }
+            $responseApi = $response->mountFileContentResponseApi($output);
 
             return response()->json($responseApi);
 
         }catch (\Throwable $e) {
             $error = new Error();
-            $errorApi = $error->mountErrorApi($e->getCode(), $e->getMessage());
+            $errorApi = $error->mountErrorApi($e->getMessage());
 
-            return response()->json($errorApi, 500);
+            return response()->json($errorApi, $e->getCode());
         }
     }
 
@@ -97,7 +93,7 @@ class FileController extends Controller
             Excel::import(new FileImport($fileName, $extension), $path, null, \Maatwebsite\Excel\Excel::CSV);
 
             $response = new Response();
-            $responseApi = $response->mountResponseApi(200,'Importação realizada com sucesso!');
+            $responseApi = $response->mountResponseApi('Importação realizada com sucesso!');
 
             return response()->json($responseApi);
 

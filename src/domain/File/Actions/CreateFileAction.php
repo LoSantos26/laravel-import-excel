@@ -18,7 +18,7 @@ class CreateFileAction
         $file = $this->fileRepository->getFileByName($fileDto->name);
 
         if(!empty($file)) {
-            throw new \Exception('Arquivo com este nome já existe.');
+            throw new \Exception('Arquivo com este nome já existe.', 400);
         }
 
         $content = [];

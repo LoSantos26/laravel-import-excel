@@ -6,7 +6,7 @@ class GetFileContentByFilterInputDto
 {
     public function __construct(
         public ?string $name,
-        public ?string $age
+        public ?string $email
     )
     { }
 
@@ -14,7 +14,7 @@ class GetFileContentByFilterInputDto
     {
         return [
             'name' => $this->name,
-            'age' => $this->age
+            'email' => $this->email
         ];
     }
 }

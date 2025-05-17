@@ -18,6 +18,5 @@ class FileContentModel extends Model
     public function file()
     {
         return $this->belongsTo(FilesModel::class, 'file_id', 'id');
-
     }
 }

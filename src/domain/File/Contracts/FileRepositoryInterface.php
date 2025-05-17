@@ -16,5 +16,9 @@ interface FileRepositoryInterface
 
     public function getFileByFilter(array $filter): ?File;
 
-    public function getContentByFilter(array $filter): FileContent|LengthAwarePaginator|null;
+    /**
+     * @param array $filter
+     * @return FileContent[]|null
+     */
+    public function getContentByFilter(array $filter): ?array;
 }
