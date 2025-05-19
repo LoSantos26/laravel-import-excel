@@ -66,9 +66,11 @@ class Response
 
     /**
      * @param FileDto[]|null $data
+     * @param int $offset
+     * @param int $limit
      * @return array|null
      */
-    public function mountGetAllFilesResponseApi(?array $data) : ?array
+    public function mountGetAllFilesResponseApi(?array $data, int $offset, int $limit) : ?array
     {
         if(!empty($data)){
             $files = [];
@@ -91,8 +93,16 @@ class Response
                 ];
             }
 
+
             return [
-                'data' => $files
+                'data' => $files,
+                'metadata' => [
+                    'total' => count($data),
+                    'limit' => $limit,
+                    'offset' => $offset,
+                    'next' => '/files?offset=' . ($offset + $limit) . '&limit=' . $limit,
+                    'previous' => '/files?offset=' . (max($offset - $limit, 0)) . '&limit=' . $limit,
+                ]
             ];
         }
 

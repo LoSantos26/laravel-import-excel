@@ -79,8 +79,8 @@ class FileController extends Controller
     public function getAll(Request $request)
     {
         try{
-            $offset = $request->input('offset');
-            $limit = $request->input('limit');
+            $offset = $request->input('offset') ?? 0;
+            $limit = $request->input('limit') ?? 10;
             $sentAt = $request->input('sent_at');
 
             $input = new GetAllFilesInputDto(
@@ -92,7 +92,7 @@ class FileController extends Controller
             $output = FileFacade::getAll($input);
 
             $response = new Response();
-            $responseApi = $response->mountGetAllFilesResponseApi($output);
+            $responseApi = $response->mountGetAllFilesResponseApi($output, $offset, $limit);
 
             return response()->json($responseApi);
 
