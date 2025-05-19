@@ -40,4 +40,8 @@ Os endpoints disponíeveis são:
 
 Além de ser uma API aplicando conceitos Restful, este projeto também foi implementado utilizando conceitos de Domain Driven Design (DDD) e Clean Architecture.
 
+Na pasta do projeto possui o arquivo `Planilha.csv`, em que foi a planilha utilizando com os campos para o funcionamento da importação.
+
+A utilização das rotas foram feitas utilizando o Postman.
+
 
