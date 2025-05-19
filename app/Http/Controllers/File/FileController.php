@@ -107,6 +107,10 @@ class FileController extends Controller
     public function upload(Request $request)
     {
         try{
+            if($request->file('file') == null) {
+                throw new \InvalidArgumentException('É necessário enviar o arquivo com um campo file', 422);
+            }
+
             $request->validate([
                 'file' => 'required|file|mimes:csv',
             ]);
